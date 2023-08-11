@@ -9,8 +9,7 @@ HUGGINGFACE_TOKEN = config('HUGGINGFACE_TOKEN')
 
 # Initialize the speaker diarization pipeline.
 # token = "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"
-token = HUGGINGFACE_TOKEN
-pipeline = diarization.initialize_pipeline(token)
+pipeline = diarization.initialize_pipeline(HUGGINGFACE_TOKEN)
 
 # Diarization on the audio file.
 audio_path = "/notebooks/comedy_zoom.wav"
