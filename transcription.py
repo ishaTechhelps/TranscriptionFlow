@@ -56,7 +56,7 @@ def transcribe_batch_dynamic_batching_v2(
     operation = client.batch_recognize(request=request)
 
     print("Waiting for operation to complete...")
-    response = operation.result(timeout=99999)
+    response = operation.result(timeout=9999)
 
     transcript_txt_path = local_file_path.replace(".wav", "_transcription.txt")
     with open(transcript_txt_path, "w") as txt_file:
