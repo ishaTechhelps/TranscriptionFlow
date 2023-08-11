@@ -1,9 +1,15 @@
 import os
 import diarization
 import audio_processing
+from decouple import config
+
+GOOGLE_PROJECT_ID = config('GOOGLE_PROJECT_ID')
+GCS_BUCKET_NAME = config('GCS_BUCKET_NAME')
+HUGGINGFACE_TOKEN = config('HUGGINGFACE_TOKEN')
 
 # Initialize the speaker diarization pipeline.
-token = "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"
+# token = "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"
+token = HUGGINGFACE_TOKEN
 pipeline = diarization.initialize_pipeline(token)
 
 # Diarization on the audio file.
@@ -22,6 +28,6 @@ for speaker, intervals in speakers_intervals.items():
     print(f"Saved audio for {speaker} at {output_file_path}")
     
     # Transcribe and save transcription to txt
-    bucket_name = "YOUR_GCS_BUCKET_NAME"
-    transcription_txt_path = transcribe_batch_dynamic_batching_v2("YOUR_PROJECT_ID", output_file_path, bucket_name)
+    bucket_name = GCS_BUCKET_NAME
+    transcription_txt_path = transcribe_batch_dynamic_batching_v2(GOOGLE_PROJECT_ID, output_file_path, bucket_name)
     print(f"Saved transcription for {speaker} at {transcription_txt_path}")
