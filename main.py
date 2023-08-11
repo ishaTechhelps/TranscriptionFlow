@@ -20,3 +20,8 @@ for speaker, intervals in speakers_intervals.items():
     output_file_path = os.path.join(output_directory, f"{speaker}.wav")
     audio_processing.split_and_merge_audio(audio_path, intervals, output_file_path)
     print(f"Saved audio for {speaker} at {output_file_path}")
+    
+    # Transcribe and save transcription to txt
+    bucket_name = "YOUR_GCS_BUCKET_NAME"
+    transcription_txt_path = transcribe_batch_dynamic_batching_v2("YOUR_PROJECT_ID", output_file_path, bucket_name)
+    print(f"Saved transcription for {speaker} at {transcription_txt_path}")
