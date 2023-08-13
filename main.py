@@ -1,7 +1,12 @@
-import os
 import diarization
+import os
 import audio_processing
+from transcription import transcribe_batch_dynamic_batching_v2
+from pyannote.audio import Pipeline
 from decouple import config
+
+# Set the Google Cloud credentials
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = config('GOOGLE_APPLICATION_CREDENTIALS')
 
 GOOGLE_PROJECT_ID = config('GOOGLE_PROJECT_ID')
 GCS_BUCKET_NAME = config('GCS_BUCKET_NAME')
@@ -12,12 +17,12 @@ HUGGINGFACE_TOKEN = config('HUGGINGFACE_TOKEN')
 pipeline = diarization.initialize_pipeline(HUGGINGFACE_TOKEN)
 
 # Diarization on the audio file.
-audio_path = "/notebooks/comedy_zoom.wav"
+audio_path = "/input/byjus_clforzoom.wav"
 diarization_result = pipeline(audio_path, min_speakers=2, max_speakers=5)
 speakers_intervals = diarization.get_speaker_intervals(diarization_result)
 
 # Split and save audio for each speaker.
-output_directory = "/notebooks/outputs/"
+output_directory = "/outputs/"
 if not os.path.exists(output_directory):
     os.makedirs(output_directory)
 

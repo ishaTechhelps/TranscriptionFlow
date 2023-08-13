@@ -1,3 +1,4 @@
 pyannote.audio
 pyannote.core
 pydub
+decouple
